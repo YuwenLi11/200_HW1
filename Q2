@@ -1,0 +1,326 @@
+C:
+#include <stdio.h>
+#include <stdlib.h>
+ 
+ 
+struct node_t {
+               	int data;
+                   struct node_t* next;
+        	};
+ 
+struct list_t {
+                 struct node_t* head;
+                 struct node_t* tail;
+       	};
+ 
+ 
+ void list_head_append(struct list_t* list, struct node_t*  node) {
+ 	   	        	 node->next=list->head;
+ 	               	 list->head= node;
+    	}
+ 
+void list_tail_append(struct list_t* list, struct node_t*  node) {
+        	 struct node_t* last =list->head;
+        	   while (last->next != NULL)
+        	   	{last = last->next;
+        	   	}
+        		last->next =node;
+    	list->tail=node;
+   	}
+ 
+   	void PrintList(struct list_t *h)
+   	{
+	    	struct node_t *x;
+ 
+    	x=h->head;
+ 
+    	while(x)
+     	{
+          printf("%d",x->data);
+          x=x->next;
+          printf("\n");
+     	}
+   	}
+ 
+ 
+int main(void) {
+        	struct node_t a,b;
+        	a.data=10;
+        	a.next=NULL;
+        	b.data=2;
+        	b.next=NULL;
+ 
+        	struct list_t text;
+        	text.head=NULL;
+        	text.tail=NULL;
+ 
+        	list_head_append(&text, &a);
+        	list_tail_append(&text, &b);
+ 
+        	PrintList(&text);
+        	return 0;
+}
+Assembly:
+ 
+.file  1 ""
+.section .mdebug.abi32
+.previous
+.nan   legacy
+.module fp=32
+.module nooddspreg
+.abicalls
+.text
+.align 2
+.globl list_head_append
+.set   nomips16
+.set   nomicromips
+.ent   list_head_append
+.type  list_head_append, @function
+list_head_append:
+.frame $fp,8,$31         	# vars= 0, regs= 1/0, args= 0, gp= 0
+.mask  0x40000000,-4
+.fmask 0x00000000,0
+.set   noreorder
+.set   nomacro
+addiu  $sp,$sp,-8
+sw 	$fp,4($sp)
+move   $fp,$sp
+sw 	$4,8($fp)
+sw 	$5,12($fp)
+movz   $31,$31,$0
+lw 	$2,8($fp)
+nop
+lw 	$3,0($2)
+lw 	$2,12($fp)
+nop
+sw 	$3,4($2)
+lw 	$2,8($fp)
+lw 	$3,12($fp)
+nop
+sw 	$3,0($2)
+nop
+move   $sp,$fp
+lw 	$fp,4($sp)
+addiu  $sp,$sp,8
+j  	$31
+nop
+ 
+.set   macro
+.set   reorder
+.end   list_head_append
+.size  list_head_append, .-list_head_append
+.align 2
+.globl list_tail_append
+.set   nomips16
+.set   nomicromips
+.ent   list_tail_append
+.type  list_tail_append, @function
+list_tail_append:
+.frame $fp,24,$31        	# vars= 8, regs= 1/0, args= 0, gp= 8
+.mask  0x40000000,-4
+.fmask 0x00000000,0
+.set   noreorder
+.set   nomacro
+addiu  $sp,$sp,-24
+sw 	$fp,20($sp)
+move   $fp,$sp
+sw 	$4,24($fp)
+sw 	$5,28($fp)
+movz   $31,$31,$0
+lw 	$2,24($fp)
+nop
+lw 	$2,0($2)
+nop
+sw 	$2,8($fp)
+b  	$L3
+nop
+ 
+$L4:
+lw 	$2,8($fp)
+nop
+lw 	$2,4($2)
+nop
+sw 	$2,8($fp)
+$L3:
+lw 	$2,8($fp)
+nop
+lw 	$2,4($2)
+nop
+bne	$2,$0,$L4
+nop
+ 
+lw 	$2,8($fp)
+lw 	$3,28($fp)
+nop
+sw 	$3,4($2)
+lw 	$2,24($fp)
+lw 	$3,28($fp)
+nop
+sw 	$3,4($2)
+nop
+move   $sp,$fp
+lw 	$fp,20($sp)
+addiu  $sp,$sp,24
+j  	$31
+nop
+ 
+.set   macro
+.set   reorder
+.end   list_tail_append
+.size  list_tail_append, .-list_tail_append
+.rdata
+.align 2
+$LC0:
+.ascii "%d\000"
+.text
+.align 2
+.globl PrintList
+.set   nomips16
+.set   nomicromips
+.ent   PrintList
+.type  PrintList, @function
+PrintList:
+.frame $fp,40,$31        	# vars= 8, regs= 2/0, args= 16, gp= 8
+.mask  0xc0000000,-4
+.fmask 0x00000000,0
+.set   noreorder
+.cpload $25
+.set   nomacro
+addiu  $sp,$sp,-40
+sw 	$31,36($sp)
+sw 	$fp,32($sp)
+move   $fp,$sp
+.cprestore	16
+movz   $31,$31,$0
+sw 	$4,40($fp)
+lw 	$2,40($fp)
+nop
+lw 	$2,0($2)
+nop
+sw 	$2,24($fp)
+b  	$L6
+nop
+ 
+$L7:
+lw 	$2,24($fp)
+nop
+lw 	$2,0($2)
+nop
+move   $5,$2
+lw 	$2,%got($LC0)($28)
+nop
+addiu  $4,$2,%lo($LC0)
+lw 	$2,%call16(printf)($28)
+nop
+move   $25,$2
+.reloc 1f,R_MIPS_JALR,printf
+1: 	jalr   $25
+nop
+ 
+lw 	$28,16($fp)
+lw 	$2,24($fp)
+nop
+lw 	$2,4($2)
+nop
+sw 	$2,24($fp)
+li 	$4,10             	# 0xa
+lw 	$2,%call16(putchar)($28)
+nop
+move   $25,$2
+.reloc 1f,R_MIPS_JALR,putchar
+1: 	jalr   $25
+nop
+ 
+lw 	$28,16($fp)
+$L6:
+lw 	$2,24($fp)
+nop
+bne	$2,$0,$L7
+nop
+ 
+nop
+move   $sp,$fp
+lw 	$31,36($sp)
+lw 	$fp,32($sp)
+addiu  $sp,$sp,40
+j  	$31
+nop
+ 
+.set   macro
+.set   reorder
+.end   PrintList
+.size  PrintList, .-PrintList
+.align 2
+.globl main
+.set   nomips16
+.set   nomicromips
+.ent   main
+.type  main, @function
+main:
+.frame $fp,56,$31        	# vars= 24, regs= 2/0, args= 16, gp= 8
+.mask  0xc0000000,-4
+.fmask 0x00000000,0
+.set   noreorder
+.cpload $25
+.set   nomacro
+addiu  $sp,$sp,-56
+sw 	$31,52($sp)
+sw 	$fp,48($sp)
+move   $fp,$sp
+.cprestore	16
+movz   $31,$31,$0
+li 	$2,10             	# 0xa
+sw 	$2,24($fp)
+sw 	$0,28($fp)
+li 	$2,2              	# 0x2
+sw 	$2,32($fp)
+sw 	$0,36($fp)
+sw 	$0,40($fp)
+sw 	$0,44($fp)
+addiu  $2,$fp,40
+addiu  $3,$fp,24
+move   $5,$3
+move   $4,$2
+lw 	$2,%got(list_head_append)($28)
+nop
+move   $25,$2
+.reloc 1f,R_MIPS_JALR,list_head_append
+1: 	jalr   $25
+nop
+ 
+lw 	$28,16($fp)
+addiu  $3,$fp,32
+addiu  $2,$fp,40
+move   $5,$3
+move   $4,$2
+lw 	$2,%got(list_tail_append)($28)
+nop
+move   $25,$2
+.reloc 1f,R_MIPS_JALR,list_tail_append
+1: 	jalr   $25
+nop
+ 
+lw 	$28,16($fp)
+addiu  $2,$fp,40
+move   $4,$2
+lw 	$2,%got(PrintList)($28)
+nop
+move   $25,$2
+.reloc 1f,R_MIPS_JALR,PrintList
+1: 	jalr   $25
+nop
+ 
+lw 	$28,16($fp)
+move   $2,$0
+move   $sp,$fp
+lw 	$31,52($sp)
+lw 	$fp,48($sp)
+addiu  $sp,$sp,56
+j  	$31
+nop
+ 
+.set   macro
+.set   reorder
+.end   main
+.size  main, .-main
+.ident "GCC: (Ubuntu 5.4.0-6ubuntu1~16.04.1) 5.4.0 20160609"
